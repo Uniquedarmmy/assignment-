@@ -1,0 +1,175 @@
+Number 1
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>program to check grade</title>
+</head>
+<body>
+    <h2>Check your CGPA</h2>
+    <form method="post" action="">
+        Enter CGPA: <input type="text" name="cgpa"><br>
+        <input type="submit" name="submit" value="Check">
+    </form>
+
+    <?php
+    function CheckCgpa($cgpa){
+        $result = '';
+        if ($cgpa >= 4.0){
+            $result ="Excellent (A)";
+        }else if($cgpa >= 3.5 ){
+            $result = "Very Good (B+)";
+        }else if($cgpa >= 3.0 ){
+           $result = "Good (B)";
+        }else if($cgpa >= 2.5 ){
+            $result = "Fair(C+)";
+        }else if($cgpa >= 2.0 ){
+            $result = "PAss(C)";
+        }else{
+           $result = "Fail(F)";
+        }
+        return $result;
+    }
+    if(isset($_POST['submit'])) {
+        // Retrieve the input values
+        $cgpa = $_POST['cgpa'];
+
+        // Check if both inputs are numeric
+        if(is_numeric($cgpa)) {
+            // Perform addition
+            $result = CheckCgpa($cgpa);
+            echo "The CGPA is: $result";
+        } else {
+            echo "Please enter valid numeric values for both numbers.";
+        }
+    }
+    ?>
+</body>
+</html>
+
+
+number 2
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Day of the Week Calculator</title>
+</head>
+<body>
+    <h2>Day of the Week Calculator</h2>
+    <form method="post" action="">
+        Enter a date (YYYY-MM-DD): <input type="text" name="dateInput">
+        <input type="submit" name="submit" value="Calculate">
+    </form>
+
+    <?php
+    // Function to validate the date
+    function validateDate($date) {
+        return preg_match("/^(\d{4})-(\d{2})-(\d{2})$/", $date, $matches) && checkdate($matches[2], $matches[3], $matches[1]);
+    }
+
+    // Function to determine if the year is a leap year
+    function isLeapYear($year) {
+        return (($year % 4 == 0) && ($year % 100 != 0)) || ($year % 400 == 0);
+    }
+
+    // Function to calculate the day of the week
+    function calculateDayOfWeek($date) {
+        list($year, $month, $day) = explode('-', $date);
+        $timestamp = mktime(0, 0, 0, $month, $day, $year);
+        return date("l", $timestamp);
+    }
+
+    // Process form submission
+    if(isset($_POST['submit'])) {
+        $dateInput = $_POST['dateInput'];
+        
+        // Validate the date
+        if (!validateDate($dateInput)) {
+            echo "<p>Invalid date. Please enter a valid date in the format YYYY-MM-DD.</p>";
+        } else {
+            // Check for leap year
+            list($year, $month, $day) = explode('-', $dateInput);
+            $leapYear = isLeapYear($year);
+
+            // Calculate day of the week
+            $dayOfWeek = calculateDayOfWeek($dateInput);
+
+            // Output the result
+            echo "<p>The day of the week for $dateInput is $dayOfWeek.</p>";
+        }
+    }
+    ?>
+</body>
+</html>
+
+number 3
+<?php 
+    function twoSum($nums, $target) {
+        $map = array(); // Hash map to store elements and their indices
+        
+        // Iterate through the array
+        foreach ($nums as $index => $num) {
+            $complement = $target - $num; // Calculate the complement needed
+            
+            // Check if the complement exists in the map
+            if (array_key_exists($complement, $map)) {
+                // Return the indices of the current element and its complement
+                return array($map[$complement], $index);
+            }
+            
+            // Store the current element and its index in the map
+            $map[$num] = $index;
+        }
+        
+        // If no solution found
+        return array();
+    }
+
+    // Example usage:
+    $nums = array(2, 7, 11, 15);
+    $target = 9;
+    $result = twoSum($nums, $target);
+    if (!empty($result)) {
+        echo "Indices of the two numbers that add up to $target: " . implode(', ', $result);
+    } else {
+        echo "No two numbers add up to $target in the given array.";
+    }
+?>
+
+
+number 4
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Palindrome Checker</title>
+    </head>
+    <body>
+        <h2>Palindrome Checker</h2>
+        <form method="post" action="">
+            Enter a string: <input type="text" name="inputString">
+            <input type="submit" name="submit" value="Check">
+        </form>
+    
+        <?php
+        // Function to determine whether a string is a palindrome
+        function isPalindrome($s) {
+            $cleaned = strtolower(preg_replace('/[^A-Za-z0-9]/', '', $s)); // Remove non-alphanumeric characters and convert to lowercase
+            return $cleaned === strrev($cleaned); // Check if the cleaned string is equal to its reverse
+        }
+    
+        // Process form submission
+        if(isset($_POST['submit'])) {
+            $inputString = $_POST['inputString'];
+    
+            // Check if the input string is a palindrome
+            if (isPalindrome($inputString)) {
+                echo "<p>The string \"$inputString\" is a palindrome.</p>";
+            } else {
+                echo "<p>The string \"$inputString\" is not a palindrome.</p>";
+            }
+        }
+        ?>
+    </body>
+    </html>
+    
